@@ -1,4 +1,4 @@
-function [data] = correct_poro_swap(filepath,stomatal_sidedness)
+function [data] = add_gsw_correction_to_LI600(filepath,stomatal_sidedness)
 %ADD_GSW_CORRECTION_TO_LI600 Applies the Rizzo & Bailey (2025) correction
 %of chamber air temperature and stomatal conductance to a csv file exported
 %from an LI-600
