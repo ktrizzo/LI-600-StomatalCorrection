@@ -74,7 +74,7 @@ for i=1:length(data.gsw)
     h_out = h(T_in,RH_out); % Tout is diffused here, and equal to Tref = Tin.
     Q = C.*(T_in - T_chamb);
     gtw = (gsw*gbw)./(gsw+gbw);
-    % -- solve implicit system of equations (13,14,15) from Rizzo and Bailey (2025) for T_out, E, gsw -- %
+    % -- solve implicit system of equations (14,15,16) from Rizzo and Bailey (2025) for T_out, E, gsw -- %
     eq1 = ( E == gtw.*(W_leaf-W_chamb) );
     eq2 = ( E == s.^(-1)*u_in*(W_out - W_in)*(1-W_out).^(-1) );
     eq3 = ( E == s.^(-1).*((Q + u_in.*h_in)./(h_out)-u_in) );
