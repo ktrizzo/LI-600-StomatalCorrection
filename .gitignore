@@ -25,6 +25,18 @@ Thumbs.db
 
 # Test outputs (keep the test scripts but not the outputs)
 Test/walnut_corrected_*.csv
+Test/venv/
+
+# Generated output files
+*_corrected.csv
+*_correction_plots*.png
+
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+Rplots.pdf
 
 # MATLAB
 *.asv

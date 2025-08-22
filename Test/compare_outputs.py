@@ -100,15 +100,34 @@ if __name__ == "__main__":
     # File paths
     matlab_file = "walnut_corrected_matlab.csv"
     python_file = "walnut_corrected_python.csv"
+    r_file = "walnut_corrected_r.csv"
     
     # Check if files exist
-    if not os.path.exists(matlab_file):
-        print(f"Error: MATLAB file not found: {matlab_file}")
-        sys.exit(1)
+    files_to_check = {
+        "MATLAB": matlab_file,
+        "Python": python_file,
+        "R": r_file
+    }
     
-    if not os.path.exists(python_file):
-        print(f"Error: Python file not found: {python_file}")
-        sys.exit(1)
+    for name, filepath in files_to_check.items():
+        if not os.path.exists(filepath):
+            print(f"Warning: {name} file not found: {filepath}")
     
-    # Run comparison
-    matlab_data, python_data = compare_csv_files(matlab_file, python_file)
+    # Run comparisons
+    print("\n" + "="*80)
+    print("MATLAB vs PYTHON COMPARISON")
+    print("="*80)
+    if os.path.exists(matlab_file) and os.path.exists(python_file):
+        matlab_data, python_data = compare_csv_files(matlab_file, python_file)
+    
+    print("\n" + "="*80)
+    print("MATLAB vs R COMPARISON")
+    print("="*80)
+    if os.path.exists(matlab_file) and os.path.exists(r_file):
+        matlab_data, r_data = compare_csv_files(matlab_file, r_file)
+    
+    print("\n" + "="*80)
+    print("PYTHON vs R COMPARISON")
+    print("="*80)
+    if os.path.exists(python_file) and os.path.exists(r_file):
+        python_data, r_data = compare_csv_files(python_file, r_file)
