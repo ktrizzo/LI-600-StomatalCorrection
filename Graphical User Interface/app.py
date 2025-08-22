@@ -29,7 +29,7 @@ st.markdown("""
     """, unsafe_allow_html=True)
 
 @st.cache_data
-def add_gsw_correction_to_LI600(file_buffer, stomatal_sidedness=1):
+def add_gsw_correction_to_LI600(file_buffer, stomatal_sidedness=1, thermal_conductance=0.007):
     """
     Applies the Rizzo & Bailey (2025) correction of chamber air temperature 
     and stomatal conductance to a csv file exported from an LI-600
@@ -65,7 +65,7 @@ def add_gsw_correction_to_LI600(file_buffer, stomatal_sidedness=1):
     a = 0.61365  # unitless (empirical magnitude of es vs T)
     b = 17.502   # unitless (empirical slope of es vs T)
     c = 240.97   # C (empirical offset of es vs T)
-    C = 0.007    # J/s/C (empirical thermal conductance)
+    C = thermal_conductance  # J/s/C (thermal conductance)
     
     cpa = 29.14      # J/mol/C (air heat capacity)
     cpw = 33.5       # J/mol/C (water heat capacity)
@@ -307,6 +307,22 @@ def main():
         )
         
         st.markdown("---")
+        
+        # Initialize thermal_conductance with default
+        thermal_conductance = 0.007
+        
+        with st.expander("Advanced Settings"):
+            thermal_conductance = st.number_input(
+                "Thermal Conductance C (W/°C)",
+                min_value=0.001,
+                max_value=0.1,
+                value=0.007,
+                step=0.001,
+                format="%.4f",
+                help="Thermal conductance between inlet air and chamber air. Default value of 0.007 was empirically calibrated by Rizzo & Bailey (2025)."
+            )
+        
+        st.markdown("---")
         st.markdown("""
         ### About
         
@@ -360,7 +376,7 @@ def main():
             
             with st.spinner("Processing your data..."):
                 # Run correction
-                corrected_data = add_gsw_correction_to_LI600(uploaded_file, stomatal_sidedness)
+                corrected_data = add_gsw_correction_to_LI600(uploaded_file, stomatal_sidedness, thermal_conductance)
                 
                 # Create plots
                 fig = create_plots(corrected_data)

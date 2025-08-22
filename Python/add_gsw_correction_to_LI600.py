@@ -3,7 +3,7 @@ import pandas as pd
 from scipy.optimize import fsolve
 import os
 
-def add_gsw_correction_to_LI600(filepath, stomatal_sidedness=1):
+def add_gsw_correction_to_LI600(filepath, stomatal_sidedness=1, thermal_conductance=0.007):
     """
     Applies the Rizzo & Bailey (2025) correction of chamber air temperature 
     and stomatal conductance to a csv file exported from an LI-600
@@ -16,6 +16,8 @@ def add_gsw_correction_to_LI600(filepath, stomatal_sidedness=1):
         Correction factor for stomatal sidedness
         1 if hypostomatous, 2 if amphistomatous, or anywhere in between 
         (optional, default = 1)
+    thermal_conductance : float
+        Thermal conductance C in W/°C (optional, default = 0.007)
     
     Returns:
     --------
@@ -53,7 +55,7 @@ def add_gsw_correction_to_LI600(filepath, stomatal_sidedness=1):
     a = 0.61365  # unitless (empirical magnitude of es vs T)
     b = 17.502   # unitless (empirical slope of es vs T)
     c = 240.97   # C (empirical offset of es vs T)
-    C = 0.007    # J/s/C (empirical thermal conductance)
+    C = thermal_conductance  # J/s/C (thermal conductance)
     
     cpa = 29.14      # J/mol/C (air heat capacity)
     cpw = 33.5       # J/mol/C (water heat capacity)

@@ -4,13 +4,14 @@
 
 library(nleqslv)  # For solving nonlinear equations
 
-add_gsw_correction_to_LI600 <- function(filepath, stomatal_sidedness = 1) {
+add_gsw_correction_to_LI600 <- function(filepath, stomatal_sidedness = 1, thermal_conductance = 0.007) {
   #' Applies the Rizzo & Bailey (2025) correction
   #' 
   #' @param filepath Path to the CSV file exported from LI-600 (required)
   #' @param stomatal_sidedness Correction factor for stomatal sidedness
   #'        1 if hypostomatous, 2 if amphistomatous, or anywhere in between 
   #'        (optional, default = 1)
+  #' @param thermal_conductance Thermal conductance C in W/°C (optional, default = 0.007)
   #' @return data.frame with corrected gsw, T_chamber, W_chamber
   
   # Read the CSV file - LI-600 format has multiple header rows
@@ -43,7 +44,7 @@ add_gsw_correction_to_LI600 <- function(filepath, stomatal_sidedness = 1) {
   a <- 0.61365  # unitless (empirical magnitude of es vs T)
   b <- 17.502   # unitless (empirical slope of es vs T)
   c <- 240.97   # C (empirical offset of es vs T)
-  C <- 0.007    # J/s/C (empirical thermal conductance)
+  C <- thermal_conductance  # J/s/C (thermal conductance)
   
   cpa <- 29.14      # J/mol/C (air heat capacity)
   cpw <- 33.5       # J/mol/C (water heat capacity)

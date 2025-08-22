@@ -1,4 +1,4 @@
-function [data] = add_gsw_correction_to_LI600(filepath,stomatal_sidedness)
+function [data] = add_gsw_correction_to_LI600(filepath,stomatal_sidedness,thermal_conductance)
 %ADD_GSW_CORRECTION_TO_LI600 Applies the Rizzo & Bailey (2025) correction
 %of chamber air temperature and stomatal conductance to a csv file exported
 %from an LI-600
@@ -7,11 +7,15 @@ function [data] = add_gsw_correction_to_LI600(filepath,stomatal_sidedness)
 %  - filepath: Path to the CSV file exported from LI-600 (required).
 %  - stomatal_sidedness: Correction factor for stomatal sidedness ...
 %    1 if hypostomatous, 2 if amphistomatous, or anywhere in between (optional, default = 1).
+%  - thermal_conductance: Thermal conductance C in W/°C (optional, default = 0.007).
 
 % Output:
 %  - new csv file with corrected gsw, T_chamber, W_chamber
 if nargin < 2 || isempty(stomatal_sidedness)
     stomatal_sidedness = 1;  % Default
+end
+if nargin < 3 || isempty(thermal_conductance)
+    thermal_conductance = 0.007;  % Default empirically calibrated value
 end
 
 data = readtable(filepath);
@@ -53,7 +57,7 @@ for i=1:length(data.gsw)
     b = 17.502;                                 % unitless (empirical slope of es vs T)
     c = 240.97;                                 % C (empirical offset of es vs T)
 
-    C = 0.007;                                  % J/s/C (empirical thermal conductance)
+    C = thermal_conductance;                    % J/s/C (thermal conductance)
 
     es = @(T) a*exp(b*T./(T+c));                % kPa (saturation vapor pressure vs T function)
     W = @(T,RH) es(T).*RH./(P_atm);              % mol/mol (water vapor mole fraction)
