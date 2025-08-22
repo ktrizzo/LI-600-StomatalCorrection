@@ -34,7 +34,7 @@ gsw_total = data.gsw.*sidedness;
 
 for i=1:length(data.gsw)
     % -- input --%
-    T_chamb = data.Tref(i);                     % C (chamber temp, assumed equal to Tref, the block reference temp)
+    T_in = data.Tref(i);                     % C (chamber temp, assumed equal to Tref, the block reference temp)
     T_leaf = data.Tleaf(i);                     % C (leaf temp)
 
     RH_in = data.rh_r(i)/100;                   % Decimal (inlet RH)
@@ -53,7 +53,7 @@ for i=1:length(data.gsw)
     b = 17.502;                                 % unitless (empirical slope of es vs T)
     c = 240.97;                                 % C (empirical offset of es vs T)
 
-    C = 0.03;                                   % J/s/C (empirical thermal conductance)
+    C = 0.007;                                  % J/s/C (empirical thermal conductance)
 
     es = @(T) a*exp(b*T./(T+c));                % kPa (saturation vapor pressure vs T function)
     W = @(T,RH) es(T).*RH./(P_atm);              % mol/mol (water vapor mole fraction)
@@ -63,15 +63,15 @@ for i=1:length(data.gsw)
     % -- computation -- %
     syms Tout E gsw;
     % -- ASSUMPTION:The chamber air temperature is the average of the inlet and outlet air temperatures -- %
-    T_in = T_chamb*2.0 - Tout;
+    T_chamb = 0.5*(T_in + Tout);
     % -- ASSUMPTION:The chamber relative humidity is the average of the inlet and outlet relative humidities -- %
     RH_chamb = 0.5*(RH_in+RH_out);
     W_chamb = W(T_chamb,RH_chamb);
     W_in = W(T_in,RH_in);
-    W_out = W(Tout,RH_out);
+    W_out = W(T_in,RH_out); % Tout is diffused here, and equal to Tref = Tin.
     W_leaf = W(T_leaf,1.0);
     h_in = h(T_in,RH_in);
-    h_out = h(Tout,RH_out);
+    h_out = h(T_in,RH_out); % Tout is diffused here, and equal to Tref = Tin.
     Q = C.*(T_in - T_chamb);
     gtw = (gsw*gbw)./(gsw+gbw);
     % -- solve implicit system of equations (13,14,15) from Rizzo and Bailey (2025) for T_out, E, gsw -- %
