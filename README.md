@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # LI-600 Stomatal Conductance Correction
 
 ## Overview
@@ -154,3 +155,7 @@ This work was supported by [funding information from paper].
 ---
 
 **Note:** The thermal conductance parameter (C = 0.007 W/°C) used in the correction was empirically calibrated using paired LI-600/LI-6800 measurements. While this value performed well across diverse species and conditions, users should be aware that instrument-specific variations may exist. You may recalibrate this coefficient yourself with controlled LI-600 and LI-6800 measurements on the same leaf patches.
+=======
+# LI-600-StomatalCorrection
+Routines for correcting stomatal conductance reported by the LI-600 Porometer according to the method of Rizzo and Bailey (2025)
+>>>>>>> a6144b4e0418bbf673535d5b4875ba9d471b1489
