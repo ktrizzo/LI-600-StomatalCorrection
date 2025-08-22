@@ -289,8 +289,7 @@ def main():
     st.markdown("""
     This tool applies the **Rizzo & Bailey (2025)** psychrometric temperature correction 
     to address the systematic positive bias in stomatal conductance measurements from 
-    LI-600 porometer CSV exports. The correction is particularly important for measurements 
-    with high stomatal conductance (>0.25 mol m⁻² s⁻¹) or low relative humidity.
+    LI-600 porometer CSV exports.
     """)
     
     # Sidebar for settings
