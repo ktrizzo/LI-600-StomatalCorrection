@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # LI-600 Stomatal Conductance Correction
 
 ## Overview
