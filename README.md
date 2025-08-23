@@ -149,11 +149,16 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ## Acknowledgments
 
-This work was supported by [funding information from paper].
+This work was supported by the United States National Science Foundation grant IOS 2047628 and 
+2307341. We graciously thank Kensuke Kimura, Erina Fushimi, Etsushi Kumagai, Koichi Nomura, Toshinori 
+Matsunami, Shohei Konno, Atsushi Maruyama for sharing the dataset of Kimura et al. (2025), and providing 
+the additional LI-600 variables needed for application of the correction. 
 
 ---
 
-**Note:** The thermal conductance parameter (C = 0.007 W/°C) used in the correction was empirically calibrated using paired LI-600/LI-6800 measurements. While this value performed well across diverse species and conditions, users should be aware that instrument-specific variations may exist. You may recalibrate this coefficient yourself with controlled LI-600 and LI-6800 measurements on the same leaf patches.
+###
+Note: The thermal conductance parameter (C = 0.007 W/°C) used in the correction was empirically calibrated using paired LI-600/LI-6800 measurements. While this value performed well across diverse species and conditions, users should be aware that instrument-specific variations may exist. You may recalibrate this coefficient yourself with controlled LI-600 and LI-6800 measurements on the same leaf patches.
+###
 =======
 # LI-600-StomatalCorrection
 Routines for correcting stomatal conductance reported by the LI-600 Porometer according to the method of Rizzo and Bailey (2025)
