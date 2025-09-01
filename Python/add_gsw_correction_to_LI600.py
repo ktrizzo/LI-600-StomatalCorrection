@@ -70,16 +70,12 @@ def add_gsw_correction_to_LI600(filepath, stomatal_sidedness=1, thermal_conducta
         return a * np.exp(b * T / (T + c))
     
     def W(T, RH, P_atm):
-        """Water vapor mole fraction (mol/mol)"""
+        """Water vapor mole fraction (mol water /mol moist air)"""
         return es(T) * RH / P_atm
-    
-    def Wd(T, RH, P_atm):
-        """Humidity ratio (mol/mol)"""
-        return es(T) * RH / (P_atm - es(T) * RH)
     
     def h(T, RH, P_atm):
         """Enthalpy (J/mol)"""
-        return cpa * T + Wd(T, RH, P_atm) * (lambdaw + cpw * T)
+        return (1.0-W(T, RH, P_atm)) * cpa * T + W(T, RH, P_atm) * (lambdaw + cpw * T)
     
     # Process each data point
     for i in range(n):
