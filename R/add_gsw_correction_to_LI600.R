@@ -60,18 +60,13 @@ add_gsw_correction_to_LI600 <- function(filepath, stomatal_sidedness = 1, therma
   }
   
   W <- function(T, RH, P_atm) {
-    # Water vapor mole fraction (mol/mol)
+    # Water vapor mole fraction (mol water / mol moist air)
     es(T) * RH / P_atm
-  }
-  
-  Wd <- function(T, RH, P_atm) {
-    # Humidity ratio (mol/mol)
-    es(T) * RH / (P_atm - es(T) * RH)
   }
   
   h <- function(T, RH, P_atm) {
     # Enthalpy (J/mol)
-    cpa * T + Wd(T, RH, P_atm) * (lambdaw + cpw * T)
+    (1.0 - W(T, RH, P_atm)) * cpa * T + W(T, RH, P_atm) * (lambdaw + cpw * T)
   }
   
   # Process each data point
