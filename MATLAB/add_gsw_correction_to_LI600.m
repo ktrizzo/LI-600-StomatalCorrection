@@ -61,8 +61,7 @@ for i=1:length(data.gsw)
 
     es = @(T) a*exp(b*T./(T+c));                % kPa (saturation vapor pressure vs T function)
     W = @(T,RH) es(T).*RH./(P_atm);              % mol/mol (water vapor mole fraction)
-    Wd = @(T,RH) es(T).*RH./(P_atm-es(T).*RH);   % mol/mol (humidity ratio)
-    h = @(T,RH) cpa*T+Wd(T,RH).*(lambdaw + cpw*T); % J/mol (enthalpy) 
+    h = @(T,RH) (1.0-W(T,RH))*cpa.*T+W(T,RH).*(lambdaw + cpw*T); % J/mol moist air (enthalpy) 
 
     % -- computation -- %
     syms Tout E gsw;
